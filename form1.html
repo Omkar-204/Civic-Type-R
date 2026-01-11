@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Test Drive Booking</title>
+</head>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Form submission handler
+        document.querySelector('form').addEventListener('submit', function (event) {
+            const fullName = document.getElementById('fullName').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const preferredDate = document.getElementById('preferredDate').value.trim();
+            const preferredTime = document.getElementById('preferredTime').value.trim();
+            const message = document.getElementById('message').value.trim();
+
+            // Ensure all fields are filled
+            if (!fullName || !email || !phone || !preferredDate || !preferredTime ) {
+                alert("All fields are required.");
+                event.preventDefault();
+                return;
+            }
+
+            // Full Name validation: only alphabets and spaces
+            const nameRegex = /^[A-Za-z\s]+$/;
+            if (!nameRegex.test(fullName)) {
+                alert("Full Name should contain only alphabets and spaces.");
+                event.preventDefault();
+                return;
+            }
+
+            // Email validation: must be a Gmail address
+            const emailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+            if (!emailRegex.test(email)) {
+                alert("Please enter a valid Gmail address (example@gmail.com). ");
+                event.preventDefault();
+                return;
+            }
+
+            // Phone Number validation: only digits, length 10
+            const phoneRegex = /^[0-9]{10}$/;
+            if (!phoneRegex.test(phone)) {
+                alert("Phone Number should contain only digits and be 10 characters long.");
+                event.preventDefault();
+                return;
+            }
+
+            // Date validation: Ensure the date is in the format YYYY-MM-DD
+            const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+            if (!dateRegex.test(preferredDate)) {
+                alert("Please enter the date in the format YYYY-MM-DD.");
+                event.preventDefault();
+                return;
+            }
+
+            // Check if the date is not in the past
+            const today = new Date().toISOString().split('T')[0]; // Current date in YYYY-MM-DD format
+            if (preferredDate < today) {
+                alert("Preferred Date cannot be in the past.");
+                event.preventDefault();
+                return;
+            }
+
+            // Time validation: Ensure time is in the format HH:MM (24-hour format)
+            const timeRegex = /^([01]\d|2[0-3]):([0-5]\d)$/;
+            if (!timeRegex.test(preferredTime)) {
+                alert("Please enter the time in the format HH:MM (24-hour format). ");
+                event.preventDefault();
+                return;
+            }
+        });
+    });
+</script>
+<body style="font-family: Arial, sans-serif; 
+             background-image: url('1221.jpg'); 
+             background-size: cover; 
+             background-repeat: no-repeat; 
+             background-position: center; 
+             background-attachment: fixed; 
+             margin: 0; 
+             padding: 0;">
+    <h1 style="color: rgb(76, 84, 194);">
+        <marquee>Book a test drive today!</marquee>
+    </h1>
+    
+    <h2>Car Test Drive Booking</h2>
+    
+    <form action="/submit-booking" method="POST" style="display: inline-block; text-align: left; padding: 20px; border: 2px solid #3860e6; border-radius: 10px; background: rgba(255, 255, 255, 0.8);">
+        <label for="fullName">Full Name:</label><br>
+        <input type="text" id="fullName" name="fullName" style="width: 100%; padding: 4px;"><br><br>
+
+        <label for="email">Email Address:</label><br>
+        <input type="text" id="email" name="email" style="width: 100%; padding: 4px;"><br><br>
+
+        <label for="phone">Phone Number:</label><br>
+        <input type="text" id="phone" name="phone" style="width: 100%; padding: 4px;"><br><br>
+
+        <label for="carModel">Honda Civic variants:</label><br>
+        <select id="carModel" name="carModel" required style="width: 100%; padding: 4px;">
+            <option value="sedan">6-Speed Manual w/2.0L Turbo 4-Cyl. Engine</option>
+        </select><br><br>
+
+        <label for="preferredDate">Preferred Date for Test Drive (YYYY-MM-DD):</label><br>
+        <input type="text" id="preferredDate" name="preferredDate" style="width: 100%; padding: 4px;" placeholder="YYYY-MM-DD"><br><br>
+
+        <label for="preferredTime">Preferred Time for Test Drive (HH:MM - 24-hour format):</label><br>
+        <input type="text" id="preferredTime" name="preferredTime" style="width: 100%; padding: 4px;" placeholder="HH:MM"><br><br>
+
+        <label for="message">Additional Notes or Requests:</label><br>
+        <textarea id="message" name="message" rows="4" cols="50" style="width: 100%; padding: 4px;" maxlength="8000"></textarea><br><br>
+
+        <button type="submit" style="background-color: rgb(76, 84, 194); color: white; padding: 10px 20px; border: none; border-radius: 4px;">Book Test Drive</button>
+    </form>
+</body>
+</html>
+
